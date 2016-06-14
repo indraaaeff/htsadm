@@ -1,0 +1,93 @@
+.navbar-style{
+	background: #6c6e98;
+}
+.nopadding{
+	padding: 0px;
+}
+a.logo{
+	color: white;
+	font-size: 30px;
+}
+img.logo-image{
+	float: right;
+	width: 118px;
+}
+.header-date{
+	background: #f8f8f8;
+	height: 32px;
+	line-height: 32px;
+	box-shadow: 1px 1px 6px rgb(150, 148, 148);
+}
+.header-nav{
+	height: 51px;
+}
+.date{
+	float: left;
+}
+.time{
+	float:right;
+}
+td {
+	border-top: none !important;
+}
+.user{
+	float: right;
+	color:#557FAA;
+}
+.user_res{
+	background:#f5f5f5; 
+	margin-top:6px; 
+	border:solid 1px #ddd; 
+	color:#557FAA; 
+	text-align:center; 
+	line-height:40px;
+}
+.kotak_user{
+	margin:auto; 
+	width:94%;  
+	padding:2% 2% 2% 2%;
+}
+.kotak_po{
+	margin:auto; 
+	width:94%;  
+	padding:2% 2% 2% 2%;
+}
+td{
+	font-size: 14px;
+    line-height: 100%;
+}
+/*---------------*/
+/* Media Queries */
+/*---------------*/
+@media (min-width:480px){
+	.kotak_user{
+		display:none
+	}
+	.time{
+		float:left;
+	}
+}
+
+@media (max-width:480px){
+	.user{
+		display:none
+	}
+		a.logo{
+		font-size: 8vw;
+	}
+}
+@media (min-width:740px){
+	.hidden_po{
+		display:none
+	}
+}
+@media (max-width:740px){
+	.po_head{
+		display:none
+	}
+}
+@media (max-width:767px){
+	img.logo-image{
+		width:90px; margin-top:10px
+	}
+}
