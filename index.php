@@ -104,10 +104,10 @@
     ?>
 	<div class="kotak_po">
 			<div class="panel panel-default">
-				<div class="panel-heading nopadding">
+				<div class="panel-heading nopadding" style="background:#f26904;">
 					<div class="po_head">
 						<table class="table nopadding" style="margin-bottom:0px;">
-							<tbody>
+							<tbody style="color:white;">
 								<tr>
 									<td><b>No Pengajuan : <?php echo $PPO_Number; ?></b></td>
 									<td><b>Tanggal : <?php echo $tgl_pengajuan;?></b></td>
@@ -117,7 +117,7 @@
 							</tbody>
 						</table>
 					</div>
-					<div class="hidden_po"> 
+					<div class="hidden_po" style="color:white;"> 
 					 	<b>
 					 		No Pengajuan : <?php echo $PPO_Number; ?><br>
  							Tanggal :  <?php echo $tgl_pengajuan;?><br>
@@ -130,7 +130,30 @@
 					</div>
 				</div>
 				<div class="panel-body">
-					
+					<div class="table-responsive">
+						<form method="post" action="post.php">
+							<table class="table table-striped table-bordered table-hover">
+								<thead class="table_po">
+									<tr>
+										<th></th>
+										<th class="tengah">NO PO</th>
+										<th class="tengah">NAMA VENDOR</th>
+										<th class="tengah">TANGGAL PO</th>
+										<th class="tengah">PPN</th>
+										<th class="tengah">TOTAL</th>
+										<th class="tengah">RT</th>
+										<th class="tengah">HP</th>
+										<th class="tengah">DL</th>
+										<th class="tengah">NOTE</th>
+									</tr>
+
+								</thead>
+								<tbody>
+									<tr></tr>
+								</tbody>
+							</table>
+						</form>
+					</div>
 				</div>
 			</div>
 	</div>
