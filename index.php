@@ -75,7 +75,7 @@
 	<div class="header-date">
 		<div class="container">
 			<div class="date">
-				<?php echo date("l"); echo('&nbsp;'); echo date("d/m/Y"); echo('&nbsp;'); echo('&nbsp;'); ?>
+				<?php echo date("l"); echo('&nbsp;'); echo date("d/m/Y"); echo('&nbsp;'); ?>
 			</div>
 				<div id="clock" class="time"></div>
 			<div class="user">
@@ -149,7 +149,10 @@
 
 								</thead>
 								<tbody>
-									<tr></tr>
+<!-- 									<input name="key" value="<?php echo $key;?>">
+									<input name="u" value="<?php echo $_GET['u'];?>">
+									<input name="total_ppo" id="total_ppo" value="<?php echo $total_ppo;?>"	>
+									<input name="tgl_pengajuan" value="<?php echo $tgl_pengajuan;?>"> -->
 								</tbody>
 							</table>
 						</form>
