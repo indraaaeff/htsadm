@@ -102,64 +102,73 @@
 		}
 
     ?>
-	<div class="kotak_po">
-			<div class="panel panel-default">
-				<div class="panel-heading nopadding" style="background:#f26904;">
-					<div class="po_head">
-						<table class="table nopadding" style="margin-bottom:0px;">
-							<tbody style="color:white;">
-								<tr>
-									<td><b>No Pengajuan : <?php echo $PPO_Number; ?></b></td>
-									<td><b>Tanggal : <?php echo $tgl_pengajuan;?></b></td>
-									<td><b>Submitted By : <?php echo $by;?></b></td>
-									<td><b><?php $total_ppo=$PPO_TableDetail->num_rows; echo "Total PO : $total_ppo";?></b></td>
-								</tr>
-							</tbody>
-						</table>
-					</div>
-					<div class="hidden_po" style="color:white;"> 
-					 	<b>
-					 		No Pengajuan : <?php echo $PPO_Number; ?><br>
- 							Tanggal :  <?php echo $tgl_pengajuan;?><br>
-							Submitted By <?php echo $by;?><br>
- 						<?php 
- 							$total_ppo=$PPO_TableDetail->num_rows;
- 							echo "Total PO : $total_ppo";
- 						?>
-						</b>
-					</div>
-				</div>
-				<div class="panel-body">
-					<div class="table-responsive">
-						<form method="post" action="post.php">
-							<table class="table table-striped table-bordered table-hover">
-								<thead class="table_po">
-									<tr>
-										<th></th>
-										<th class="tengah">NO PO</th>
-										<th class="tengah">NAMA VENDOR</th>
-										<th class="tengah">TANGGAL PO</th>
-										<th class="tengah">PPN</th>
-										<th class="tengah">TOTAL</th>
-										<th class="tengah">RT</th>
-										<th class="tengah">HP</th>
-										<th class="tengah">DL</th>
-										<th class="tengah">NOTE</th>
-									</tr>
 
-								</thead>
-								<tbody>
-<!-- 									<input name="key" value="<?php echo $key;?>">
-									<input name="u" value="<?php echo $_GET['u'];?>">
-									<input name="total_ppo" id="total_ppo" value="<?php echo $total_ppo;?>"	>
-									<input name="tgl_pengajuan" value="<?php echo $tgl_pengajuan;?>"> -->
-								</tbody>
-							</table>
-						</form>
-					</div>
+    <?php
+
+	if (isset($_GET['p'])) {
+	//$user=BOD_RT;
+		$PPO_TableDetail = $Database->query( "Call GetPPO_Detail( '$PPO_Number' )" );
+			if ($PPO_TableDetail && ($PPO_TableDetail->num_rows > 0)) {
+		
+	?>
+	<div class="kotak_po">
+		<div class="panel panel-default">
+			<div class="panel-heading nopadding" style="background:#f26904;">
+				<div class="po_head">
+					<table class="table nopadding" style="margin-bottom:0px;">
+						<tbody style="color:white;">
+							<tr>
+								<td><b>No Pengajuan : <?php echo $PPO_Number; ?></b></td>
+								<td><b>Tanggal : <?php echo $tgl_pengajuan;?></b></td>
+								<td><b>Submitted By : <?php echo $by;?></b></td>
+								<td><b><?php $total_ppo=$PPO_TableDetail->num_rows; echo "Total PO : $total_ppo";?></b></td>
+							</tr>
+						</tbody>
+					</table>
+				</div>
+				<div class="hidden_po" style="color:white;"> 
+				 	<b>
+				 		No Pengajuan : <?php echo $PPO_Number; ?><br>
+							Tanggal :  <?php echo $tgl_pengajuan;?><br>
+						Submitted By <?php echo $by;?><br>
+						<?php 
+							$total_ppo=$PPO_TableDetail->num_rows;
+							echo "Total PO : $total_ppo";
+						?>
+					</b>
 				</div>
 			</div>
+			<div class="panel-body">
+				<div class="table-responsive">
+					<form method="post" action="post.php">
+						<table class="table table-striped table-bordered table-hover">
+							<thead class="table_po">
+								<tr>
+									<th></th>
+									<th class="tengah">NO PO</th>
+									<th class="tengah">NAMA VENDOR</th>
+									<th class="tengah">TANGGAL PO</th>
+									<th class="tengah">PPN</th>
+									<th class="tengah">TOTAL</th>
+									<th class="tengah">RT</th>
+									<th class="tengah">HP</th>
+									<th class="tengah">DL</th>
+									<th class="tengah">NOTE</th>
+								</tr>
+
+							</thead>
+							<tbody>
+
+							</tbody>
+						</table>
+					</form>
+				</div>
+			</div>
+		</div>
 	</div>
+	<?php 
+		} }
+	?>
 </body>
 </html>
 <script>
