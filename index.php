@@ -6,7 +6,9 @@
 	<link rel="stylesheet" type="text/css" href="css/bootstrap.min.css">
 	<link rel="stylesheet" type="text/css" href="css/style.css">
 	<link href='http://fonts.googleapis.com/css?family=Oswald:400,300,700' rel='stylesheet' type='text/css'>
-	<script src="js/bootstrap.min.js"></script>
+	<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.0/jquery.min.js"></script>
+  	<script src="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js"></script>
+
 </head>
 <body>
 	<?php
@@ -158,7 +160,90 @@
 
 							</thead>
 							<tbody>
+								<!-- loop for row details -->
+								<?php
+								$no = +1;
+								$grand= 0;
+								while ($row = $PPO_TableDetail->fetch_assoc()) {
 
+								?>
+								<tr align="center" id="detail_column">
+            						<td><?php echo $no;?></td>
+            						<td><?php echo $row['no_po'];?></td>
+            						<td><?php echo $row['nama_vendor'];?></td>
+            						<td><?php echo  date( 'd-m-Y', strtotime( $row['tgl_po'] ));?></td>
+            						<?php 
+	            						if ($row['non_ppn'] == 0)
+	            							{ $ppn='ya';
+	            							echo '<td align="center">Ya</td>';
+	            							echo "<input type='hidden' name='ppn' value='$ppn'>";
+	            						}else {
+	            							$ppn='tidak';
+	            							echo '<td align="center">Tidak</td>';
+	            							echo "<input type='hidden' name='ppn' value='$ppn'>";
+	            						}
+            						?>
+            						<td><?php echo number_format( $row['total'] );?></td>
+            						<?php 
+            							$grand += $row['total'];
+            						?>
+            						<?php 
+	            						$po_approve_by_rt   = $row['approve_by_rt'];
+	            						$po_tgl_approved_rt = $row['tgl_approved_rt'];	  
+	            						$po_comment_rt      = $row['comment_rt'];		
+
+	            						$po_approve_by_hp   = $row['approve_by_hp'];
+	            						$po_tgl_approved_hp = $row['tgl_approved_hp'];	  
+	            						$po_comment_hp      = $row['comment_hp'];		
+
+	            						$po_approve_by_dl   = $row['approve_by_dl'];
+	            						$po_tgl_approved_dl = $row['tgl_approved_dl'];	  
+	            						$po_comment_dl      = $row['comment_dl'];		
+            						?>
+            						<input  type="hidden"  name="po_tgl_app_hp[]" value="<?php echo $po_tgl_approved_hp;?>" >
+            						<input  type="hidden"  name="po_app_hp[]"     value="<?php echo $po_approve_by_hp;?>" >
+            						<input  type="hidden"  name="po_tgl_app_dl[]" value="<?php echo $po_tgl_approved_dl;?>" >
+            						<input  type="hidden"  name="po_app_dl[]"     value="<?php echo $po_approve_by_dl;?>" >
+									<!-- BOD_RT CHECKBOX  -->
+            						<?php 
+            							if ($user == BOD_RT)
+            							{
+            						?>
+            						<td>
+            							<?php 
+            								//dummy data for checking checkbox
+            								// $po_tgl_approved_dl = 1;
+            								// $po_tgl_approved_hp = 1;
+            								// $po_approve_by_hp =1 ;
+
+            								if ($po_tgl_approved_rt==''){
+            									if(!empty($po_tgl_approved_hp) && !empty($po_tgl_approved_dl)) {
+            										echo '<input type="checkbox" disabled>';
+	            								}else{
+	            									echo '<input type="checkbox" name="approve_by_rt" value="1">';
+	            								}
+	            							?>
+            						</td>
+	            						<?php 
+	            							}
+	            						 ?>
+            						<td>
+            							<input type="checkbox" disabled>
+            						</td>
+            						<td>
+            							<input type="checkbox" disabled>
+            						</td>
+	            					<?php 
+	            						} 
+	            					?>
+	            					<td>
+	            						<textarea name="comment_rt" id="comment_rt" cols="15" rows="1"></textarea>
+										<!-- <input type="text" name="comment_rt"> -->
+	            					</td>
+            					</tr>
+            					<?php 
+            						} 
+            					?>
 							</tbody>
 						</table>
 					</form>
@@ -167,7 +252,8 @@
 		</div>
 	</div>
 	<?php 
-		} }
+		} 
+	}
 	?>
 </body>
 </html>
