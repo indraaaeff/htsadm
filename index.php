@@ -250,7 +250,7 @@
 	            					</td>
 	            					<td>
 	            						<?php 
-            								if ($po_tgl_approved_hp=='' && $po_approve_by_hp==''){
+            								if ($po_tgl_approved_hp=='' || $po_approve_by_hp==''){
             									if(!empty($po_tgl_approved_rt) || !empty($po_approve_by_rt)){
             										echo '<input type="checkbox" disabled>';
 	            								}else{
