@@ -215,31 +215,93 @@
             								// $po_tgl_approved_dl = 1;
             								// $po_tgl_approved_hp = 1;
             								// $po_approve_by_hp =1 ;
+            								// $po_approve_by_dl =1 ;
+            								// $po_comment_hp = 'saya setuju';
 
             								if ($po_tgl_approved_rt==''){
-            									if(!empty($po_tgl_approved_hp) && !empty($po_tgl_approved_dl)) {
+            									if(!empty($po_tgl_approved_hp) || !empty($approve_by_hp) && !empty($po_tgl_approved_dl) || !empty($po_approve_by_dl)) {
             										echo '<input type="checkbox" disabled>';
 	            								}else{
-	            									echo '<input type="checkbox" name="approve_by_rt" value="1">';
+	            						?>
+	            							<input type="checkbox" name="approve_by_rt" value="checked">
+	            							<?php
 	            								}
 	            							?>
             						</td>
 	            						<?php 
 	            							}
-	            						 ?>
+	            						?>
             						<td>
-            							<input type="checkbox" disabled>
+            							<input type="checkbox" value="" disabled <?php if(!empty($po_approve_by_hp)){echo "checked";} ?> >
             						</td>
             						<td>
-            							<input type="checkbox" disabled>
+            							<input type="checkbox" disabled <?php if(!empty($po_approve_by_hp)){echo "checked";} ?> >
             						</td>
+	            					<td>
+	            						<textarea name="comment_rt" id="comment_rt" cols="15" rows="1">
+	            						</textarea>
+	            					</td>
 	            					<?php 
-	            						} 
+	            						} else if ($user == BOD_HP) 
+	            						{
 	            					?>
 	            					<td>
-	            						<textarea name="comment_rt" id="comment_rt" cols="15" rows="1"></textarea>
-										<!-- <input type="text" name="comment_rt"> -->
+	            						<input type="checkbox" disabled <?php if(!empty($po_approve_by_rt)){echo "checked";} ?>>
 	            					</td>
+	            					<td>
+	            						<?php 
+            								if ($po_tgl_approved_hp=='' && $po_approve_by_hp==''){
+            									if(!empty($po_tgl_approved_rt) || !empty($po_approve_by_rt)){
+            										echo '<input type="checkbox" disabled>';
+	            								}else{
+	            						?>
+	            							<input type="checkbox" name="approve_by_rt" value="checked">
+	            							<?php
+	            								}
+	            							?>
+	            					</td>
+	            					<?php
+	            						}
+	            					 ?>
+	            					 <td>
+	            						<input type="checkbox" disabled <?php if(!empty($po_approve_by_rt)){echo "checked";} ?>>
+	            					</td>
+	            					<td>
+	            						<textarea name="comment_hp" id="comment_hp" cols="15" rows="1"></textarea>
+	            					</td>
+	            					<!-- BOD_DL CHECKBOX -->
+	            					<?php 
+	            						} else {
+	            							// dummy data for checking DL checkbox
+	            							// $po_approve_by_rt =1 ;
+	            					?>
+	            					<td>
+	            						<input type="checkbox" disabled <?php if(!empty($po_approve_by_rt)){echo "checked";} ?>>
+	            					</td>
+	            					<td>
+	            						<input type="checkbox" disabled <?php if(!empty($po_approve_by_hp)){echo "checked";} ?>>
+	            					</td>
+	            					<td>
+            							<?php 
+            								if ($po_tgl_approved_dl==''){
+            									if(!empty($po_tgl_approved_rt) || !empty($po_approve_by_rt)){
+            										echo '<input type="checkbox" disabled>';
+	            								}else{
+	            						?>
+	            							<input type="checkbox" name="approve_by_rt" value="checked">
+	            							<?php
+	            								}
+	            							?>
+            						</td>
+	            						<?php 
+	            							}
+	            						?>
+	            					<td>
+	            						<textarea name="comment_dl" id="comment_dl" cols="15" rows="1"></textarea>
+	            					</td>
+	            					<?php
+	            						} 
+	            					?>
             					</tr>
             					<?php 
             						} 
