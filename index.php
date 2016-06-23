@@ -22,7 +22,9 @@
 
 	$po_approve_by_dl   = $row['approve_by_dl'];
 	$po_tgl_approved_dl = $row['tgl_approved_dl'];	  
-	$po_comment_dl      = $row['comment_dl'];	
+	$po_comment_dl      = $row['comment_dl'];
+
+	$bulan = $row['bulan'];	
 
 	// $po_comment_rt = "OKAY !";
 	// $po_comment_hp = "saya sangat tidak setuju, karena alat yang lama masih mendukung kinerja tersebut";
@@ -183,7 +185,7 @@
 									<th class="tengah">RT</th>
 									<th class="tengah">HP</th>
 									<th class="tengah">DL</th>
-									<th class="tengah">NOTE</th>
+									<th class="tengah">STATUS</th>
 								</tr>
 
 							</thead>
@@ -196,10 +198,11 @@
 
 								?>
 								<tr align="center" id="detail_column">
+									<?php $Tanggal_po = date( 'd-m-Y', strtotime( $row['tgl_po'] )); ?>
             						<td><?php echo $no;?></td>
             						<td><?php echo $row['no_po'];?></td>
             						<td><?php echo $row['nama_vendor'];?></td>
-            						<td><?php echo  date( 'd-m-Y', strtotime( $row['tgl_po'] ));?></td>
+            						<td><?php echo  $Tanggal_po;?></td>
             						<?php 
 	            						if ($row['non_ppn'] == 0)
 	            							{ $ppn='ya';
@@ -220,7 +223,7 @@
             						<input  type="hidden"  name="po_app_hp[]"     value="<?php echo $po_approve_by_hp;?>" >
             						<input  type="hidden"  name="po_tgl_app_dl[]" value="<?php echo $po_tgl_approved_dl;?>" >
             						<input  type="hidden"  name="po_app_dl[]"     value="<?php echo $po_approve_by_dl;?>" >
-									<!-- BOD_RT CHECKBOX  -->
+            															<!-- BOD_RT CHECKBOX  -->
             						<?php 
 										// $po_approve_by_hp = 1;
             						$po_approve_by_dl = 1;
@@ -278,7 +281,7 @@
             							?>
             						</td>
 	            					<td>
-	            						<p><u>Lihat Note</u></p>
+	            						<p>Waiting</p>
 	            					</td>
 	            					<?php 
 	            						} else if ($user == BOD_HP) 
@@ -328,7 +331,7 @@
             							?>
 	            					</td>
 	            					<td>
-	            						<p data-toggle="modal" data-target="#myModal"><u>Lihat Note</u></p>
+	            						<p>Waiting</p>
 	            						<!-- <textarea name="comment_hp" id="comment_hp" cols="15" rows="1"></textarea> -->
 	            					</td>
 	            					<!-- BOD_DL CHECKBOX -->
@@ -381,7 +384,7 @@
 	            							}
 	            						?>
 	            					<td>
-										<p data-toggle="modal" data-target="#myModal"><u>Lihat Note</u></p>
+										<p>Waiting</p>
 	            						<!-- <textarea name="comment_dl" id="comment_dl" cols="15" rows="1"></textarea> -->
 	            					</td>
 	            					<?php
@@ -396,21 +399,44 @@
 					</form>
 					<!-- Modal -->
 					<div class="modal fade" id="myModal" role="dialog">
-						<div class="modal-dialog">
+						<div class="modal-dialog modal-lg">
 
 							<!-- Modal content-->
 							<div class="modal-content">
-								<div class="modal-header">
+								<div class="modal-header" style="background: #f26904;">
 									<button type="button" class="close" data-dismiss="modal">&times;</button>
-									<h4 class="modal-title">BOD's Note</h4>
+									<h2 class="modal-title" style="color:white;">Approval Details</h2>
 								</div>
 								<div class="modal-body">
-									<p>Richardus Teddy :</p><input class="form-control" type="text" id="txtfname" value="<?php if(!empty($po_comment_rt)){echo $po_comment_rt;} ?>" <?php if($user == BOD_HP || $user == BOD_DL){echo "readonly";} ?>>
-									<p>Harijanto Pribadi :</p><input class="form-control" type="text" id="txtlname" value="<?php if(!empty($po_comment_hp)){echo $po_comment_hp;} ?>" <?php if($user == BOD_RT || $user == BOD_DL){echo "readonly";} ?>>
-									<p>Dicky Lisal :</p><input class="form-control" type="text" value="<?php if(!empty($po_comment_dl)){echo $po_comment_dl;} ?>" <?php if($user == BOD_RT || $user == BOD_HP){echo "readonly";} ?>>
+									<div class="row">
+										<div class="col-md-6">
+											<h3><u>PO Details</u></h3>
+											<div class="form-group">
+												<label for="ppo_number">Nomor Pengajuan Order :</label>
+												<input class="form-control" type="text" id="ppo_number" value="<?php echo $row['no_po']; ?>" readonly>
+												<label>Tanggal Pengajuan Order :</label>
+												<input class="form-control "type="text" id="tanggal_po" value="<?php echo $Tanggal_po ?>" readonly>
+												<label>Nama Vendor :</label>
+												<input class="form-control "type="text" id="nama_vendor" readonly>
+											</div>
+										</div>
+										<div class="col-md-6">
+											<h3><u>BOD's NOTE</u></h3>
+									<!-- <label>Richardus Teddy :</label><input class="form-control" type="text" id="comment_rt[]" value="<?php if(!empty($po_comment_rt)){echo $po_comment_rt;} ?>" <?php if($user == BOD_HP || $user == BOD_DL){echo "readonly";} ?>> -->
+									<!-- <label>Harijanto Pribadi :</label><input class="form-control" type="text" id="comment_hp[]" value="<?php if(!empty($po_comment_hp)){echo $po_comment_hp;} ?>" <?php if($user == BOD_RT || $user == BOD_DL){echo "readonly";} ?>> -->
+									<!-- <label>Dicky Lisal :</label><input class="form-control" type="text" id="comment_dl[]" value="<?php if(!empty($po_comment_dl)){echo $po_comment_dl;} ?>" <?php if($user == BOD_RT || $user == BOD_HP){echo "readonly";} ?>> -->
+											<label for="comment_rt">Richardus Teddy</label>
+											<textarea class="form-control" name="comment_rt[]" id="comment_rt" rows="5" <?php if($user == BOD_HP || $user == BOD_DL){echo "readonly";} ?>><?php if(!empty($po_comment_rt)){echo $po_comment_rt;} ?></textarea>
+											<label for="comment_hp">Harijanto Pribadi</label>
+											<textarea class="form-control" name="comment_hp[]" id="comment_hp[]" rows="5" <?php if($user == BOD_RT || $user == BOD_DL){echo "readonly";} ?>><?php if(!empty($po_comment_hp)){echo $po_comment_hp;} ?></textarea>
+											<label for="comment_dl">Dicky Lisal</label>
+											<textarea class="form-control" name="comment_dl[]" id="comment_dl[]" rows="5" <?php if($user == BOD_RT || $user == BOD_HP){echo "readonly";} ?>><?php if(!empty($po_comment_dl)){echo $po_comment_dl;} ?></textarea>
+										</div>
+									</div>
 								</div>
 								<div class="modal-footer">
-									<button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+									<h5 style="float:left;font-weight:bold;">Submitted by <?php echo $by ?> </h5>
+									<button type="button" class="btn btn-default" data-dismiss="modal">Save</button>
 								</div>
 							</div>
 
@@ -423,6 +449,7 @@
 	
 	<?php 
 	// echo $user;
+		echo $bulan;
 		} 
 	}
 	?>
@@ -465,7 +492,9 @@ window.onload=startTime;
 
 $('table tbody tr  td').on('click',function(){
     $("#myModal").modal("show");
-    $("#txtfname").val($(this).closest('tr').children()[0].textContent);
-    $("#txtlname").val($(this).closest('tr').children()[1].textContent);
+    $("#ppo_number").val($(this).closest('tr').children()[1].textContent);
+    $("#tanggal_po").val($(this).closest('tr').children()[3].textContent);
+    $("#nama_vendor").val($(this).closest('tr').children()[2].textContent);
+
 });
 </script>
