@@ -75,6 +75,9 @@ thead.table_po{
     text-align: center;
     font-size: 11px;
 }
+.col-md-6 textarea{
+	resize:none;
+}
 /*---------------*/
 /* Media Queries */
 /*---------------*/

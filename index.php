@@ -24,8 +24,8 @@
 	$po_tgl_approved_dl = $row['tgl_approved_dl'];	  
 	$po_comment_dl      = $row['comment_dl'];
 
-	$bulan = $row['bulan'];	
-
+	// $po_tgl_approved_rt=1;
+	// $po_tgl_approved_hp=1;
 	// $po_comment_rt = "OKAY !";
 	// $po_comment_hp = "saya sangat tidak setuju, karena alat yang lama masih mendukung kinerja tersebut";
     // $po_comment_dl = "saya setuju karena, kita harus menggunakan teknologi terbaru guna mendukung kecepatan koneksi";
@@ -171,6 +171,24 @@
 				</div>
 			</div>
 			<div class="panel-body">
+				<?php 
+					if (!empty($notif)) {
+						echo '<div class="alert alert-danger">Data ini sudah di proses.</div>';
+					}
+				?>
+				<!-- notif jika sudah di proses -->
+				<!-- <?php 
+					if ($user == BOD_RT){
+						if (!empty($po_tgl_approved_rt)) {
+							
+						}
+					}
+					if(!empty($po_tgl_approved_rt)) {
+						if(!empty($po_tgl_approved_hp) || !empty($po_tgl_approved_dl)){
+							echo '<div class="alert alert-danger">Data ini sudah di proses.</div>';
+						}
+					}
+				?> -->
 				<div class="table-responsive">
 					<form method="post" action="post.php">
 						<table class="table table-striped table-bordered table-hover">
@@ -223,76 +241,124 @@
             						<input  type="hidden"  name="po_app_hp[]"     value="<?php echo $po_approve_by_hp;?>" >
             						<input  type="hidden"  name="po_tgl_app_dl[]" value="<?php echo $po_tgl_approved_dl;?>" >
             						<input  type="hidden"  name="po_app_dl[]"     value="<?php echo $po_approve_by_dl;?>" >
-            															<!-- BOD_RT CHECKBOX  -->
+            						<!-- BOD_RT Session CHECKBOX  -->
             						<?php 
 										// $po_approve_by_hp = 1;
-            						$po_approve_by_dl = 1;
+            						// $po_approve_by_dl = 1;
+            						// $po_tgl_approved_hp = 'rejected';
+            						// $po_approve_by_rt =1;
+            						// $po_tgl_approved_rt =1;
             							if ($user == BOD_RT)
             							{
             						?>
-            						<td>
+            						<td id="asd">
             							<?php 
             								//dummy data for checking checkbox
+            								// $po_tgl_approved_rt=0;
+            								// $po_approve_by_hp=1;
+            								// $po_approve_by_dl=1;
             								// $po_tgl_approved_dl = 1;
             								// $po_tgl_approved_hp = 1;
             								// $po_approve_by_hp =1 ;
             								// $po_approve_by_dl =1 ;
-            								// $po_comment_hp = 'saya setuju';
 
             								if ($po_tgl_approved_rt==''){
-            									if(!empty($po_tgl_approved_hp) && !empty($po_tgl_approved_dl)) {
+            									if(!empty($po_approve_by_hp) && !empty($po_approve_by_dl)) {
             										echo '<input type="checkbox" disabled>';
+            										$notif=1;
 	            								}else{
 	            						?>
 	            							<input type="checkbox" name="approve_by_rt">
 	            							<?php
+	            								$notif=0;
 	            								}
 	            							?>
             						</td>
 	            						<?php 
+	            							} else {
+	            								if (!empty($po_approve_by_rt)) {
+	            									echo '<input type="checkbox" disabled checked>';
+	            								} else {
+	            									echo '<span class="glyphicon glyphicon-remove"></span>';
+	            								}
 	            							}
 	            						?>
-            						<td>
+            						<td id="asd">
             							<?php 
             								if($po_approve_by_hp==1) 
             								{ 
             							?>
-            							<input type="checkbox" value="" disabled <?php if(!empty($po_approve_by_hp)){echo "checked";}?> >
+            							<input type="checkbox" disabled checked>
             							<?php 
+            								} else if (empty($po_tgl_approved_hp)) {
+            							?>
+            							<input type="checkbox" disabled>
+            							<?php
             								} else {
             							?>
-            							<span title="<?php if(!empty($po_comment_hp)){echo $po_comment_hp;} ?>" class="glyphicon glyphicon-remove"></span>
-            							<?php
+										<span class="glyphicon glyphicon-remove"></span>
+										<?php
             								}
             							?>
             						</td>
-            						<td>
+            						<td id="asd">
             							<?php 
             								if($po_approve_by_dl==1) 
             								{ 
             							?>
-            							<input style="cursor:default !important" title="<?php if(!empty($po_comment_dl)){echo $po_comment_dl;} ?>" type="checkbox" value="" disabled <?php if(!empty($po_approve_by_dl)){echo "checked";} ?> >
+										<input type="checkbox" disabled checked>
             							<?php 
+            								} else if(empty($po_tgl_approved_dl)) {
+            							?>
+            							<input type="checkbox" disabled>
+            							<?php
             								} else {
             							?>
             							<span title="" class="glyphicon glyphicon-remove"></span>
-            							<?php
+            							<?php		
             								}
             							?>
             						</td>
 	            					<td>
-	            						<p>Waiting</p>
+	            						<!-- <p>Waiting</p> -->
+	            						<?php 
+	            							if(!empty($po_tgl_approved_rt)){
+	            								if($po_approve_by_rt==1){
+	            									echo '<p style="color:green;font-weight:bold;">Approved</p>';
+	            								} else {
+	            									echo '<p style="color:red;font-weight:bold;">Rejected</p>';
+	            								}
+	            							} else if(empty($po_tgl_approved_rt)){
+	            								if (!empty($po_approve_by_hp) && !empty($po_approve_by_dl)) {
+	            									echo '<p style="color:green;font-weight:bold;">Approved</p>';
+	            								} else {
+	            									echo '<p style="color:orange;font-weight:bold;">Waiting</p>';
+	            								}
+	            							}
+	            						?>
 	            					</td>
+	            					<!-- BOD_HP Session CHECKBOX -->
 	            					<?php 
 	            						} else if ($user == BOD_HP) 
 	            						{
+	            					// $po_approve_by_rt = 1;
+	            					// $po_tgl_approved_rt=1;
+	            					// $po_approve_by_dl=1;
+	            					// $po_tgl_approved_dl = 1;
+	            					$po_approve_by_hp= 1;
+	            					// $po_tgl_approved_hp = 1;
+
 	            					?>
-	            					<td>
+	            					<td id="asd">
 										<?php 
             								if($po_approve_by_rt==1) 
             								{ 
             							?>
-            							<input type="checkbox" value="" disabled <?php if(!empty($po_approve_by_rt)){echo "checked";} ?> >
+            							<input type="checkbox" disabled checked>
+            							<?php 
+            								} else if(empty($po_tgl_approved_rt)){
+            							?>
+            							<input type="checkbox" disabled>
             							<?php 
             								} else {
             							?>
@@ -301,14 +367,14 @@
             								}
             							?>
 	            					</td>
-	            					<td>
+	            					<td id="asd">
 	            						<?php 
-            								if ($po_tgl_approved_hp=='' || $po_approve_by_hp==''){
-            									if(!empty($po_tgl_approved_rt) || !empty($po_approve_by_rt)){
+            								if ($po_tgl_approved_hp==''){
+            									if(!empty($po_approve_by_rt)){
             										echo '<input type="checkbox" disabled>';
 	            								}else{
 	            						?>
-	            							<input type="checkbox" name="approve_by_rt" value="checked">
+	            						<input type="checkbox" name="approve_by_hp">
 	            							<?php
 	            								}
 	            							?>
@@ -316,12 +382,16 @@
 	            					<?php
 	            						}
 	            					 ?>
-	            					 <td>
+	            					 <td id="asd">
 										<?php 
             								if($po_approve_by_dl==1) 
             								{ 
             							?>
-            							<input type="checkbox" value="" disabled <?php if(!empty($po_approve_by_dl)){echo "checked";} ?> >
+            							<input type="checkbox" disabled checked >
+            							<?php 
+            								} else if(empty($po_tgl_approved_dl)){
+            							?>
+            							<input type="checkbox" disabled>
             							<?php 
             								} else {
             							?>
@@ -340,7 +410,7 @@
 	            							// dummy data for checking DL checkbox
 	            							// $po_approve_by_rt =1 ;
 	            					?>
-	            					<td>
+	            					<td id="asd">
 										<?php 
             								if($po_approve_by_rt==1) 
             								{ 
@@ -354,12 +424,12 @@
             								}
             							?>
 	            					</td>
-	            					<td>
+	            					<td id="asd">
 										<?php 
             								if($po_approve_by_hp==1) 
             								{ 
             							?>
-            							<input type="checkbox" value="" disabled <?php if(!empty($po_approve_by_hp)){echo "checked";} ?> >
+            							<input type="checkbox" disabled <?php if(!empty($po_approve_by_hp)){echo "checked";} ?> >
             							<?php 
             								} else {
             							?>
@@ -368,14 +438,14 @@
             								}
             							?>
 	            					</td>
-	            					<td>
+	            					<td id="asd">
             							<?php 
             								if ($po_tgl_approved_dl==''){
             									if(!empty($po_tgl_approved_rt) || !empty($po_approve_by_rt)){
             										echo '<input type="checkbox" disabled>';
 	            								}else{
 	            						?>
-	            							<input type="checkbox" name="approve_by_rt" value="checked">
+	            							<input type="checkbox" name="approve_by_rt" checked>
 	            							<?php
 	            								}
 	            							?>
@@ -421,7 +491,7 @@
 											</div>
 										</div>
 										<div class="col-md-6">
-											<h3><u>BOD's NOTE</u></h3>
+											<h3><u>BOD's Note</u></h3>
 									<!-- <label>Richardus Teddy :</label><input class="form-control" type="text" id="comment_rt[]" value="<?php if(!empty($po_comment_rt)){echo $po_comment_rt;} ?>" <?php if($user == BOD_HP || $user == BOD_DL){echo "readonly";} ?>> -->
 									<!-- <label>Harijanto Pribadi :</label><input class="form-control" type="text" id="comment_hp[]" value="<?php if(!empty($po_comment_hp)){echo $po_comment_hp;} ?>" <?php if($user == BOD_RT || $user == BOD_DL){echo "readonly";} ?>> -->
 									<!-- <label>Dicky Lisal :</label><input class="form-control" type="text" id="comment_dl[]" value="<?php if(!empty($po_comment_dl)){echo $po_comment_dl;} ?>" <?php if($user == BOD_RT || $user == BOD_HP){echo "readonly";} ?>> -->
@@ -449,7 +519,6 @@
 	
 	<?php 
 	// echo $user;
-		echo $bulan;
 		} 
 	}
 	?>
@@ -490,7 +559,7 @@ function checkTime(i)
 
 window.onload=startTime;
 
-$('table tbody tr  td').on('click',function(){
+$('tr #asd').on('click',function(){
     $("#myModal").modal("show");
     $("#ppo_number").val($(this).closest('tr').children()[1].textContent);
     $("#tanggal_po").val($(this).closest('tr').children()[3].textContent);
