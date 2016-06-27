@@ -11,25 +11,6 @@
 
 </head>
 <body>
-	<?php 
-	$po_approve_by_rt   = $row['approve_by_rt'];
-	$po_tgl_approved_rt = $row['tgl_approved_rt'];	  
-	$po_comment_rt      = $row['comment_rt'];		
-
-	$po_approve_by_hp   = $row['approve_by_hp'];
-	$po_tgl_approved_hp = $row['tgl_approved_hp'];	  
-	$po_comment_hp      = $row['comment_hp'];		
-
-	$po_approve_by_dl   = $row['approve_by_dl'];
-	$po_tgl_approved_dl = $row['tgl_approved_dl'];	  
-	$po_comment_dl      = $row['comment_dl'];
-
-	// $po_tgl_approved_rt=1;
-	// $po_tgl_approved_hp=1;
-	// $po_comment_rt = "OKAY !";
-	// $po_comment_hp = "saya sangat tidak setuju, karena alat yang lama masih mendukung kinerja tersebut";
-    // $po_comment_dl = "saya setuju karena, kita harus menggunakan teknologi terbaru guna mendukung kecepatan koneksi";
-	?>
 	<?php
 
 	if ( isset($_GET['u']) && isset($_GET['p']) && isset($_GET['k']) ) {
@@ -55,11 +36,9 @@
 				case BOD_RT_ID : 
 					$_SESSION['username'] = BOD_RT;
 					break;
-
 				case BOD_HP_ID : 
 					$_SESSION['username'] = BOD_HP;
 					break;
-
 				case BOD_DL_ID : 
 					$_SESSION['username'] = BOD_DL;
 					break;
@@ -207,6 +186,28 @@
 								</tr>
 
 							</thead>
+							<?php 
+							$po_approve_by_rt   = $row['approve_by_rt'];
+							$po_tgl_approved_rt = $row['tgl_approved_rt'];	  
+							$po_comment_rt      = $row['comment_rt'];		
+
+							$po_approve_by_hp   = $row['approve_by_hp'];
+							$po_tgl_approved_hp = $row['tgl_approved_hp'];	  
+							$po_comment_hp      = $row['comment_hp'];		
+
+							$po_approve_by_dl   = $row['approve_by_dl'];
+							$po_tgl_approved_dl = $row['tgl_approved_dl'];	  
+							$po_comment_dl      = $row['comment_dl'];
+
+							// $po_tgl_approved_rt="2/6/2016";
+							// $po_approve_by_rt=1;
+							// $po_tgl_approved_hp=1;
+							// $po_approve_by_hp=0;
+							// $po_tgl_approved_dl=1;
+							// $po_comment_rt = "OKAY !";
+							// $po_comment_hp = "saya sangat tidak setuju, karena alat yang lama masih mendukung kinerja tersebut";
+						    // $po_comment_dl = "saya setuju karena, kita harus menggunakan teknologi terbaru guna mendukung kecepatan koneksi";
+							?>
 							<tbody>
 								<!-- loop for row details -->
 								<?php
@@ -251,7 +252,7 @@
             							if ($user == BOD_RT)
             							{
             						?>
-            						<td id="asd">
+            						<td id="check-box">
             							<?php 
             								//dummy data for checking checkbox
             								// $po_tgl_approved_rt=0;
@@ -283,7 +284,7 @@
 	            								}
 	            							}
 	            						?>
-            						<td id="asd">
+            						<td id="check-box">
             							<?php 
             								if($po_approve_by_hp==1) 
             								{ 
@@ -301,7 +302,7 @@
             								}
             							?>
             						</td>
-            						<td id="asd">
+            						<td id="check-box">
             							<?php 
             								if($po_approve_by_dl==1) 
             								{ 
@@ -345,11 +346,11 @@
 	            					// $po_tgl_approved_rt=1;
 	            					// $po_approve_by_dl=1;
 	            					// $po_tgl_approved_dl = 1;
-	            					$po_approve_by_hp= 1;
+	            					// $po_approve_by_hp= 1;
 	            					// $po_tgl_approved_hp = 1;
 
 	            					?>
-	            					<td id="asd">
+	            					<td id="check-box">
 										<?php 
             								if($po_approve_by_rt==1) 
             								{ 
@@ -367,22 +368,20 @@
             								}
             							?>
 	            					</td>
-	            					<td id="asd">
+	            					<td id="check-box">
 	            						<?php 
-            								if ($po_tgl_approved_hp==''){
-            									if(!empty($po_approve_by_rt)){
-            										echo '<input type="checkbox" disabled>';
-	            								}else{
-	            						?>
-	            						<input type="checkbox" name="approve_by_hp">
-	            							<?php
-	            								}
-	            							?>
-	            					</td>
-	            					<?php
-	            						}
+            								if(!empty($po_tgl_approved_hp)){
+            									if (!empty($po_approve_by_hp)) {
+            										echo '<input type="checkbox" disabled checked>';
+            									} else {
+            										echo '<span class="glyphicon glyphicon-remove"></span>';
+            									}
+	            							} else {
+	            								echo '<input type="checkbox" name="approve_by_hp">';
+	            							}
 	            					 ?>
-	            					 <td id="asd">
+	            					</td>
+	            					 <td id="check-box">
 										<?php 
             								if($po_approve_by_dl==1) 
             								{ 
@@ -401,7 +400,22 @@
             							?>
 	            					</td>
 	            					<td>
-	            						<p>Waiting</p>
+	            						<!-- <p>Waiting</p> -->
+	            						<?php 
+	            							if(!empty($po_tgl_approved_rt)){
+	            								if($po_approve_by_rt==1){
+	            									echo '<p style="color:green;font-weight:bold;">Approved</p>';
+	            								} else {
+	            									echo '<p style="color:red;font-weight:bold;">Rejected</p>';
+	            								}
+	            							} else if(empty($po_tgl_approved_rt)){
+	            								if (!empty($po_approve_by_hp) && !empty($po_approve_by_dl)) {
+	            									echo '<p style="color:green;font-weight:bold;">Approved</p>';
+	            								} else {
+	            									echo '<p style="color:orange;font-weight:bold;">Waiting</p>';
+	            								}
+	            							}
+	            						?>
 	            						<!-- <textarea name="comment_hp" id="comment_hp" cols="15" rows="1"></textarea> -->
 	            					</td>
 	            					<!-- BOD_DL CHECKBOX -->
@@ -410,7 +424,7 @@
 	            							// dummy data for checking DL checkbox
 	            							// $po_approve_by_rt =1 ;
 	            					?>
-	            					<td id="asd">
+	            					<td id="check-box">
 										<?php 
             								if($po_approve_by_rt==1) 
             								{ 
@@ -424,7 +438,7 @@
             								}
             							?>
 	            					</td>
-	            					<td id="asd">
+	            					<td id="check-box">
 										<?php 
             								if($po_approve_by_hp==1) 
             								{ 
@@ -438,7 +452,7 @@
             								}
             							?>
 	            					</td>
-	            					<td id="asd">
+	            					<td id="check-box">
             							<?php 
             								if ($po_tgl_approved_dl==''){
             									if(!empty($po_tgl_approved_rt) || !empty($po_approve_by_rt)){
@@ -454,7 +468,22 @@
 	            							}
 	            						?>
 	            					<td>
-										<p>Waiting</p>
+										<!-- <p>Waiting</p> -->
+											            						<?php 
+	            							if(!empty($po_tgl_approved_rt)){
+	            								if($po_approve_by_rt==1){
+	            									echo '<p style="color:green;font-weight:bold;">Approved</p>';
+	            								} else {
+	            									echo '<p style="color:red;font-weight:bold;">Rejected</p>';
+	            								}
+	            							} else if(empty($po_tgl_approved_rt)){
+	            								if (!empty($po_approve_by_hp) && !empty($po_approve_by_dl)) {
+	            									echo '<p style="color:green;font-weight:bold;">Approved</p>';
+	            								} else {
+	            									echo '<p style="color:orange;font-weight:bold;">Waiting</p>';
+	            								}
+	            							}
+	            						?>
 	            						<!-- <textarea name="comment_dl" id="comment_dl" cols="15" rows="1"></textarea> -->
 	            					</td>
 	            					<?php
@@ -464,6 +493,205 @@
             					<?php 
             						$no++;} 
             					?>
+            					 <?php 
+ 
+ if ( isset($_GET['notif']) )
+     {
+	 echo"<div class='alerts'> $_GET[notif] </div>";
+	 } else {
+ if ($user==BOD_RT) 
+		  {
+		  
+          if (!is_null( $po_tgl_approved_rt ) || !empty( $po_tgl_approved_rt ))
+		           {
+				     if ( !is_null( $po_tgl_approved_hp ) || !empty( $po_tgl_approved_hp )   )
+                              {
+                              $appA= BOD_RT;
+				              $appB= BOD_HP;
+				              $end_appA = ucwords($appA);
+				              $end_appB = ucwords($appB);
+				              echo"<div class='alerts' style='line-height:170%;'><b>Data pengajuan PO ini telah selesai di proses</b><br>
+                              <div style='float:left; width:75px;'> Process By</div> 
+					          <div style='float:left;margin-left:10px;margin-right:10px;'> : </div> 
+					          <div style=float:left;>$end_appA dan $end_appB</div><br>
+                              <div style='float:left; width:75px;'>Tanggal</div><div style='float:left;margin-left:10px;margin-right:10px;'>:</div>     
+					          <div style=float:left;> $po_tgl_approved_rt dan $po_tgl_approved_hp</div><br>                            
+					          </div>";	
+							  } 
+							  else if ( !is_null( $po_tgl_approved_dl ) || !empty( $po_tgl_approved_dl )   )
+                              {
+                              $appA= BOD_RT;
+				              $appB= BOD_DL;
+				              $end_appA = ucwords($appA);
+				              $end_appB = ucwords($appB);
+				              echo"<div class='alerts' style='line-height:170%;'><b>Data pengajuan PO ini telah selesai di proses</b><br>
+                              <div style='float:left; width:75px;'> Process By</div> 
+					          <div style='float:left;margin-left:10px;margin-right:10px;'> : </div> 
+					          <div style=float:left;>$end_appA dan $end_appB</div><br>
+                              <div style='float:left; width:75px;'>Tanggal</div><div style='float:left;margin-left:10px;margin-right:10px;'>:</div>     
+					          <div style=float:left;> $po_tgl_approved_rt dan $po_tgl_approved_dl</div><br>                            
+					          </div>";	
+							  } 
+							 else { 
+				    $yang_approv=BOD_RT;
+					  $end_yang_app = ucwords($yang_approv);
+				      echo"<div class='alerts'><b>Data pengajuan PO ini telah selesai di proses</b><br>
+                           <div style='float:left; width:75px;'>Process By</div> <div style='float:left;margin-left:10px;margin-right:10px;'> : </div> <div style=float:left;>                           $end_yang_app</div> <br>
+                           <div style='float:left; width:75px;'> Tanggal</div> <div style='float:left; margin-left:10px;margin-right:10px;'>:</div> <div style=float:left;>                           $po_tgl_approved_rt</div> </div>";
+				    }
+				   
+				 
+		
+				   
+		   }   else  { 
+		   
+		    if ( (!is_null( $po_tgl_approved_hp ) || !empty( $po_tgl_approved_hp )) && (!is_null( $po_tgl_approved_dl ) || !empty( $po_tgl_approved_dl ))  )
+				             {
+							 
+				              $appA= BOD_HP;
+				              $appB= BOD_DL;
+				              $end_appA = ucwords($appA);
+				              $end_appB = ucwords($appB);
+				              echo"<div class='alerts' style='line-height:170%;'><b>Data pengajuan PO ini telah selesai di proses</b><br>
+                              <div style='float:left; width:75px;'> Process By</div> 
+					          <div style='float:left;margin-left:10px;margin-right:10px;'> : </div> 
+					          <div style=float:left;>$end_appA dan $end_appB</div><br>
+                              <div style='float:left; width:75px;'>Tanggal</div><div style='float:left;margin-left:10px;margin-right:10px;'>:</div>     
+					          <div style=float:left;> $po_tgl_approved_hp dan $po_tgl_approved_dl</div><br>                            
+					          </div>";	
+		                      }  else { 
+		   
+                    ?>
+                    <tr>
+		            <td colspan="10">
+		            	<input type="submit" class="btn btn-success submit" value="Submit">
+                    <!-- <input type="submit" name="submit" value="submit"  onClick="return confirm('Anda sudah yakin?')"/></td> -->
+                    </tr>
+              <?php } } 
+
+										
+          } 
+		  
+		  
+ else if ($user==BOD_HP) 
+		 {
+		  if (!is_null( $po_tgl_approved_hp ) || !empty( $po_tgl_approved_hp ))
+		               {
+                         
+
+                          if (!is_null( $po_tgl_approved_dl ) || !empty( $po_tgl_approved_dl ))
+				             {
+				              $appA= BOD_HP;
+				              $appB= BOD_DL;
+				              $end_appA = ucwords($appA);
+				              $end_appB = ucwords($appB);
+				              echo"<div class='alerts' style='line-height:170%;'><b>Data pengajuan PO ini telah selesai di proses</b><br>
+                              <div style='float:left; width:75px;'> Process By</div> 
+					          <div style='float:left;margin-left:10px;margin-right:10px;'> : </div> 
+					          <div style=float:left;>$end_appA dan $end_appB</div><br>
+                              <div style='float:left; width:75px;'>Tanggal</div><div style='float:left;margin-left:10px;margin-right:10px;'>:</div>     
+					          <div style=float:left;> $po_tgl_approved_hp dan $po_tgl_approved_dl</div><br>                            
+					          </div>";	
+		                      }  else {  
+							           
+						 
+		                                   echo'<div class="alerts"><b>Data pengajuan PO ini telah selesai di proses</b></div>';
+							                    }
+												
+												
+		                    
+				          
+				            
+						   
+						
+					}	 else { 
+					 if (!is_null( $po_tgl_approved_rt ) || !empty( $po_tgl_approved_rt ))
+				                           {
+						                    $yang_approv=BOD_RT;
+					                        $end_yang_app = ucwords($yang_approv);
+				                             echo"<div class='alerts'><b>Data pengajuan PO ini telah selesai di proses</b><br>
+                                             <div style='float:left; width:75px;'>Process By</div>
+											 <div style='float:left;margin-left:10px;margin-right:10px;'> : </div> 
+											 <div style=float:left;> $end_yang_app</div> <br>
+                                             <div style='float:left; width:75px;'> Tanggal</div> 
+						                     <div style='float:left; margin-left:10px;margin-right:10px;'>:</div>
+										     <div style=float:left;> $po_tgl_approved_rt</div> </div>";
+		                
+				                             } else {
+                           ?>
+                           <tr>
+		                   <td colspan="10">
+		                   <input type="submit" class="btn btn-success submit" value="Submit">
+                           <!-- <input type="submit" name="submit" value="submit"  onClick="return confirm('Anda sudah yakin?')"/></td> -->
+                           </tr>
+						 
+                 <?php   } }
+ 
+										
+										
+										
+		            } 
+					
+else if ($user==BOD_DL)  
+		{
+				
+		 if (!is_null( $po_tgl_approved_dl ) || !empty( $po_tgl_approved_dl ))
+		             {
+					 
+					  if ( !is_null( $po_tgl_approved_hp ) || !empty( $po_tgl_approved_hp ) )
+                          {
+							 
+							 $appA= BOD_HP;
+				             $appB= BOD_DL;
+				             $end_appA = ucwords($appA);
+				             $end_appB = ucwords($appB);
+				             echo"<div class='alerts' style='line-height:170%;'><b>Data pengajuan PO ini telah selesai di proses</b><br>
+                             <div style='float:left; width:75px;'> Process By</div> 
+					         <div style='float:left;margin-left:10px;margin-right:10px;'> : </div> 
+					         <div style=float:left;>$end_appA dan $end_appB</div><br>
+                             <div style='float:left; width:75px;'>Tanggal</div><div style='float:left;margin-left:10px;margin-right:10px;'>:</div>     
+					         <div style=float:left;> $po_tgl_approved_hp dan $po_tgl_approved_dl</div><br>          
+					         </div>";	
+		                    } else {
+						             
+						 
+		                                   echo'<div class="alerts"><b>Data pengajuan PO ini telah selesai di proses</b></div>';
+							                    }
+												
+												
+		                    
+				          
+				            
+						   
+						
+					}	 else { 
+					
+					if (!is_null( $po_tgl_approved_rt ) || !empty( $po_tgl_approved_rt ))
+				                        {
+				                           $yang_approv=BOD_RT;
+					                       $end_yang_app = ucwords($yang_approv);
+				                           echo"<div class='alerts'><b>Data pengajuan PO ini telah selesai di proses</b><br>
+                                           <div style='float:left; width:75px;'>Process By</div> 
+										   <div style='float:left;margin-left:10px;margin-right:10px;'> : </div> 
+										   <div style=float:left;>$end_yang_app</div> <br>
+                                           <div style='float:left; width:75px;'> Tanggal</div> 
+						                   <div style='float:left; margin-left:10px;margin-right:10px;'>:</div> 
+										   <div style=float:left;>$po_tgl_approved_rt</div> </div>";
+		                                 } else {
+	                         ?>
+                             <tr>
+		                     <td colspan="10">
+		                     	<input type="submit" class="btn btn-success submit" value="Submit">
+                             <!-- <input type="submit" name="submit" value="submit"  onClick="return confirm('Anda sudah yakin?')"/></td> -->
+                             </tr>
+		              <?php  } }
+						
+										
+						 } 
+						 else {} ?> 
+
+
+<?php } ?>
 							</tbody>
 						</table>
 					</form>
@@ -482,9 +710,9 @@
 										<div class="col-md-6">
 											<h3><u>PO Details</u></h3>
 											<div class="form-group">
-												<label for="ppo_number">Nomor Pengajuan Order :</label>
+												<label for="ppo_number">Nomor PO :</label>
 												<input class="form-control" type="text" id="ppo_number" value="<?php echo $row['no_po']; ?>" readonly>
-												<label>Tanggal Pengajuan Order :</label>
+												<label>Tanggal PO :</label>
 												<input class="form-control "type="text" id="tanggal_po" value="<?php echo $Tanggal_po ?>" readonly>
 												<label>Nama Vendor :</label>
 												<input class="form-control "type="text" id="nama_vendor" readonly>
@@ -498,9 +726,9 @@
 											<label for="comment_rt">Richardus Teddy</label>
 											<textarea class="form-control" name="comment_rt[]" id="comment_rt" rows="5" <?php if($user == BOD_HP || $user == BOD_DL){echo "readonly";} ?>><?php if(!empty($po_comment_rt)){echo $po_comment_rt;} ?></textarea>
 											<label for="comment_hp">Harijanto Pribadi</label>
-											<textarea class="form-control" name="comment_hp[]" id="comment_hp[]" rows="5" <?php if($user == BOD_RT || $user == BOD_DL){echo "readonly";} ?>><?php if(!empty($po_comment_hp)){echo $po_comment_hp;} ?></textarea>
+											<textarea class="form-control" name="comment_hp[]" id="comment_hp" rows="5" <?php if($user == BOD_RT || $user == BOD_DL){echo "readonly";} ?>><?php if(!empty($po_comment_hp)){echo $po_comment_hp;} ?></textarea>
 											<label for="comment_dl">Dicky Lisal</label>
-											<textarea class="form-control" name="comment_dl[]" id="comment_dl[]" rows="5" <?php if($user == BOD_RT || $user == BOD_HP){echo "readonly";} ?>><?php if(!empty($po_comment_dl)){echo $po_comment_dl;} ?></textarea>
+											<textarea class="form-control" name="comment_dl[]" id="comment_dl" rows="5" <?php if($user == BOD_RT || $user == BOD_HP){echo "readonly";} ?>><?php if(!empty($po_comment_dl)){echo $po_comment_dl;} ?></textarea>
 										</div>
 									</div>
 								</div>
@@ -559,11 +787,11 @@ function checkTime(i)
 
 window.onload=startTime;
 
-$('tr #asd').on('click',function(){
+$('tr #check-box').on('click',function(){
     $("#myModal").modal("show");
     $("#ppo_number").val($(this).closest('tr').children()[1].textContent);
     $("#tanggal_po").val($(this).closest('tr').children()[3].textContent);
     $("#nama_vendor").val($(this).closest('tr').children()[2].textContent);
-
 });
+
 </script>
