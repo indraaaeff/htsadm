@@ -4,6 +4,7 @@
 	<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
 	<link rel="stylesheet" type="text/css" href="css/bootstrap.css">
 	<link rel="stylesheet" type="text/css" href="css/bootstrap.min.css">
+	<link rel="stylesheet" type="text/css" href="css/sticky-footer-navbar.css">
 	<link rel="stylesheet" type="text/css" href="css/style.css">
 	<link href='http://fonts.googleapis.com/css?family=Oswald:400,300,700' rel='stylesheet' type='text/css'>
 	<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.0/jquery.min.js"></script>
@@ -70,21 +71,22 @@
 	          	<img class="logo-image" src="img/logo_hts_glowing.png" alt="">
 	          </div>
 			</div>
+			<div class="header-date">
+				<div class="container">
+					<div class="date">
+						<?php echo date("l"); echo('&nbsp;'); echo date("d/m/Y"); echo('&nbsp;'); ?>
+					</div>
+					<div id="clock" class="time"></div>
+					<div class="user">
+						<b>
+							<?php echo ucwords($user); ?>
+						</b>
+					</div>
+				</div>
+			</div>
 		</nav>
 	</div>
-	<div class="header-date">
-		<div class="container">
-			<div class="date">
-				<?php echo date("l"); echo('&nbsp;'); echo date("d/m/Y"); echo('&nbsp;'); ?>
-			</div>
-				<div id="clock" class="time"></div>
-			<div class="user">
-				<b>
-					<?php echo ucwords($user); ?>
-				</b>
-			</div>
-		</div>
-	</div>
+	<div class="spasi"></div>
 	<!-- spasi header dan content -->
 	<div class="kotak_user">
 	<div class="user_res">
@@ -667,9 +669,9 @@
 						<div class="modal-dialog modal-lg">
 
 							<!-- Modal content-->
-							<div class="modal-content">
-								<div class="modal-header" style="background: #f26904;">
-									<button type="button" class="close" data-dismiss="modal">&times;</button>
+							<div class="modal-content" style="">
+								<div class="modal-header" style="background: #f26904;border-radius:5px;">
+									<button type="button" class="close" data-dismiss="modal" style="color:white;opacity:1;">&times;</button>
 									<h2 class="modal-title" style="color:white;">Approval Details</h2>
 								</div>
 								<div class="modal-body">
@@ -717,11 +719,11 @@
 		} 
 	}
 	?>
-	<div class="footer">
+	<footer class="footer">
       <div class="container">
         <p class="text-muted">Copyright &copy; 2016 PT. Hawk Teknologi Solusi, All Rights Reserved.</p>
       </div>
-    </div>
+    </footer>
 </body>
 </html>
 <script>
