@@ -157,19 +157,6 @@
 						echo '<div class="alert alert-danger">Data ini sudah di proses.</div>';
 					}
 				?>
-				<!-- notif jika sudah di proses -->
-				<!-- <?php 
-					if ($user == BOD_RT){
-						if (!empty($po_tgl_approved_rt)) {
-							
-						}
-					}
-					if(!empty($po_tgl_approved_rt)) {
-						if(!empty($po_tgl_approved_hp) || !empty($po_tgl_approved_dl)){
-							echo '<div class="alert alert-danger">Data ini sudah di proses.</div>';
-						}
-					}
-				?> -->
 				<div class="table-responsive">
 					<form method="post" action="post.php">
 						<table class="table table-striped table-bordered table-hover">
@@ -224,7 +211,7 @@
             						<td><?php echo $row['no_po'];?></td>
             						<td><?php echo $row['nama_vendor'];?></td>
             						<td><?php echo  $Tanggal_po;?></td>
-            						<td style="display:none;"><?php echo $row['comment_rt'] ?></td>
+            						<!-- <td style="display:none;"><?php echo $row['comment_rt'] ?></td> -->
             						<?php 
 	            						if ($row['non_ppn'] == 0)
 	            							{ $ppn='ya';
@@ -269,14 +256,22 @@
             								if ($po_tgl_approved_rt==''){
             									if(!empty($po_approve_by_hp) && !empty($po_approve_by_dl)) {
             										echo '<input type="checkbox" disabled>';
-            										$notif=1;
 	            								}else{
 	            						?>
-	            							<input type="checkbox" name="approve_by_rt">
+	            							<input type="checkbox" class="tanggal" name="tanggal" id="chk<?php echo $no;?>" onClick="check(this, '<?php echo $no;?>'); check2(this, 'pp<?php echo $no;?>');" />
+	            							<!-- <input type="checkbox" name="approve_by_rt" onclick="check(this, 'date1');"> -->
 	            							<?php
-	            								$notif=0;
 	            								}
 	            							?>
+	            							<input type="" name="po_tgl_approved_rt[]" class="tgl" id="<?php echo $no;?>"  value="<?php echo $po_tgl_approved_rt;?>" readonly="readonly">
+	            							<input type="" name="po_approve_by_rt[]"  id="pp<?php echo $no;?>" value="<?php echo $po_approve_by_rt;?>" readonly="readonly">
+	            							<input type="" name="no_po[]"  value="<?php echo $row['no_po'];?>">
+	            							<input type="" name="total[]"  value="<?php echo $row['total'];?>">
+	            							<input type="" name="tgl_po[]" value="<?php echo  date( 'd-m-Y', strtotime( $row['tgl_po'] ));?>">
+	            							<input type="" name="nama_vendor[]" value="<?php echo $row['nama_vendor'];?>">
+	            							<input type="" name="no_ppo" value="<?php echo $PPO_Number;?>">
+	            							<input type="" name="sub_by" value="<?php echo $by;?>">
+	            							<input type="" name="comment_rt" value="<?php echo $comment_rt; ?>">
             						</td>
 	            						<?php 
 	            							} else {
@@ -380,9 +375,23 @@
             										echo '<span class="glyphicon glyphicon-remove"></span>';
             									}
 	            							} else {
-	            								echo '<input type="checkbox" name="approve_by_hp">';
+	            						?>
+	            							<!-- <input type="checkbox" name="approve_by_hp"> -->
+	            							<input type="checkbox" class="tanggal"  name="tanggal"  id="chk<?php echo $no;?>"
+                                                    onClick="check(this, '<?php echo $no;?>'); check2(this, 'pp<?php echo $no;?>');" />
+	            							<?php 
 	            							}
-	            					 ?>
+	            							?>
+	            							<input type="" name="po_tgl_approved_hp[]" class="tgl" id="<?php echo $no;?>"  value="<?php echo $po_tgl_approved_hp;?>" readonly>
+	            							<input type="" name="po_approve_by_hp[]"  id="pp<?php echo $no;?>" value="<?php echo $po_approve_by_hp;?>" readonly>
+	            							<input type="" name="no_po[]"  value="<?php echo $row['no_po'];?>">
+	            							<input type="" name="total[]"  value="<?php echo $row['total'];?>">
+	            							<input type="" name="tgl_po[]" value="<?php echo  date( 'd-m-Y', strtotime( $row['tgl_po'] ));?>">
+	            							<input type="" name="nama_vendor[]" value="<?php echo $row['nama_vendor'];?>">
+	            							<input type="" name="no_ppo" value="<?php echo $PPO_Number;?>">
+	            							<input type="" name="sub_by" value="<?php echo $by;?>">
+	            							<input type="" name="comment_rt" value="<?php echo $comment_hp; ?>">
+	            					
 	            					</td>
 	            					 <td id="check-box">
 										<?php 
@@ -419,7 +428,6 @@
 	            								}
 	            							}
 	            						?>
-	            						<!-- <textarea name="comment_hp" id="comment_hp" cols="15" rows="1"></textarea> -->
 	            					</td>
 	            					<!-- BOD_DL CHECKBOX -->
 	            					<?php 
@@ -432,47 +440,66 @@
             								if($po_approve_by_rt==1) 
             								{ 
             							?>
-            							<input type="checkbox" value="" disabled <?php if(!empty($po_approve_by_rt)){echo "checked";} ?> >
+            							<input type="checkbox" disabled checked>
+            							<?php 
+            								} else if(empty($po_tgl_approved_rt)){
+            							?>
+            							<input type="checkbox" disabled>
             							<?php 
             								} else {
             							?>
             							<span class="glyphicon glyphicon-remove"></span>
             							<?php
+            								}
+            							?>
+	            					</td>
+	            					<td id="check-box">
+            							<?php 
+            								if($po_approve_by_hp==1) 
+            								{ 
+            							?>
+            							<input type="checkbox" disabled checked>
+            							<?php 
+            								} else if (empty($po_tgl_approved_hp)) {
+            							?>
+            							<input type="checkbox" disabled>
+            							<?php
+            								} else {
+            							?>
+										<span class="glyphicon glyphicon-remove"></span>
+										<?php
             								}
             							?>
 	            					</td>
 	            					<td id="check-box">
 										<?php 
-            								if($po_approve_by_hp==1) 
-            								{ 
-            							?>
-            							<input type="checkbox" disabled <?php if(!empty($po_approve_by_hp)){echo "checked";} ?> >
-            							<?php 
-            								} else {
-            							?>
-            							<span class="glyphicon glyphicon-remove"></span>
-            							<?php
-            								}
-            							?>
-	            					</td>
-	            					<td id="check-box">
-            							<?php 
-            								if ($po_tgl_approved_dl==''){
-            									if(!empty($po_tgl_approved_rt) || !empty($po_approve_by_rt)){
-            										echo '<input type="checkbox" disabled>';
-	            								}else{
+            								if(!empty($po_tgl_approved_hp)){
+            									if (!empty($po_approve_by_hp)) {
+            										echo '<input type="checkbox" disabled checked>';
+            									} else {
+            										echo '<span class="glyphicon glyphicon-remove"></span>';
+            									}
+	            							} else {
 	            						?>
-	            							<input type="checkbox" name="approve_by_rt" checked>
-	            							<?php
-	            								}
-	            							?>
-            						</td>
-	            						<?php 
+	            							<!-- <input type="checkbox" name="approve_by_hp"> -->
+	            							<input type="checkbox" class="tanggal"  name="tanggal"  id="chk<?php echo $no;?>"
+                                                    onClick="check(this, '<?php echo $no;?>'); check2(this, 'pp<?php echo $no;?>');" />
+	            							<?php 
 	            							}
-	            						?>
+	            							?>
+	            							<input type="" name="po_tgl_approved_hp[]" class="tgl" id="<?php echo $no;?>"  value="<?php echo $po_tgl_approved_hp;?>" readonly>
+	            							<input type="" name="po_approve_by_hp[]"  id="pp<?php echo $no;?>" value="<?php echo $po_approve_by_hp;?>" readonly>
+	            							<input type="" name="no_po[]"  value="<?php echo $row['no_po'];?>">
+	            							<input type="" name="total[]"  value="<?php echo $row['total'];?>">
+	            							<input type="" name="tgl_po[]" value="<?php echo  date( 'd-m-Y', strtotime( $row['tgl_po'] ));?>">
+	            							<input type="" name="nama_vendor[]" value="<?php echo $row['nama_vendor'];?>">
+	            							<input type="" name="no_ppo" value="<?php echo $PPO_Number;?>">
+	            							<input type="" name="sub_by" value="<?php echo $by;?>">
+	            							<input type="" name="comment_rt" value="<?php echo $comment_hp; ?>">
+            						</td>
 	            					<td>
 										<!-- <p>Waiting</p> -->
-											            						<?php 
+										<?php 
 	            							if(!empty($po_tgl_approved_rt)){
 	            								if($po_approve_by_rt==1){
 	            									echo '<p style="color:green;font-weight:bold;">Approved</p>';
@@ -487,12 +514,52 @@
 	            								}
 	            							}
 	            						?>
-	            						<!-- <textarea name="comment_dl" id="comment_dl" cols="15" rows="1"></textarea> -->
 	            					</td>
 	            					<?php
 	            						} 
 	            					?>
             					</tr>
+            					<!-- Modal -->
+            					<div class="modal fade" id="myModal" role="dialog">
+            						<div class="modal-dialog modal-lg">
+            							<!-- Modal content-->
+            							<div class="modal-content" style="">
+            								<div class="modal-header" style="background: #f26904;border-radius:5px;">
+            									<button type="button" class="close" data-dismiss="modal" style="color:white;opacity:1;">&times;</button>
+            									<h2 class="modal-title" style="color:white;">Approval Details</h2>
+            								</div>
+            								<div class="modal-body">
+            									<div class="row">
+            										<div class="col-md-6">
+            											<h3><u>PO Details</u></h3>
+            											<div class="form-group">
+            												<label for="ppo_number">Nomor PO :</label>
+            												<input class="form-control" type="text" id="ppo_number" value="<?php echo $row['no_po']; ?>" readonly>
+            												<label>Tanggal PO :</label>
+            												<input class="form-control "type="text" id="tanggal_po" value="<?php echo $Tanggal_po ?>" readonly>
+            												<label>Nama Vendor :</label>
+            												<input class="form-control "type="text" id="nama_vendor" readonly>
+            											</div>
+            										</div>
+            										<div class="col-md-6">
+            											<h3><u>BOD's Note</u></h3>
+            								<!-- 			<label for="comment_rt">Richardus Teddy</label>
+            											<textarea class="form-control" name="comment_rt[]" rows="5" <?php if($user == BOD_HP || $user == BOD_DL){echo "readonly";} ?>><?php if(!empty($po_comment_rt)){echo $po_comment_rt;} ?></textarea>
+            											<label for="comment_hp">Harijanto Pribadi</label>
+            											<textarea class="form-control" name="comment_hp[]" rows="5" <?php if($user == BOD_RT || $user == BOD_DL){echo "readonly";} ?>><?php if(!empty($po_comment_hp)){echo $po_comment_hp;} ?></textarea>
+            											<label for="comment_dl">Dicky Lisal</label>
+            											<textarea class="form-control" name="comment_dl[]" rows="5" <?php if($user == BOD_RT || $user == BOD_HP){echo "readonly";} ?>><?php if(!empty($po_comment_dl)){echo $po_comment_dl;} ?></textarea> -->
+            										</div>
+            									</div>
+            								</div>
+            								<div class="modal-footer">
+            									<h5 style="float:left;font-weight:bold;">Submitted by <?php echo $by ?> </h5>
+            									<button type="button" class="btn btn-default" data-dismiss="modal">Save</button>
+            								</div>
+            							</div>
+            						</div>
+            					</div>
+            					<!-- end of modal -->
             					<?php 
             						$no++;} 
             					?>
@@ -664,56 +731,11 @@
 							</tbody>
 						</table>
 					</form>
-					<!-- Modal -->
-					<div class="modal fade" id="myModal" role="dialog">
-						<div class="modal-dialog modal-lg">
 
-							<!-- Modal content-->
-							<div class="modal-content" style="">
-								<div class="modal-header" style="background: #f26904;border-radius:5px;">
-									<button type="button" class="close" data-dismiss="modal" style="color:white;opacity:1;">&times;</button>
-									<h2 class="modal-title" style="color:white;">Approval Details</h2>
-								</div>
-								<div class="modal-body">
-									<div class="row">
-										<div class="col-md-6">
-											<h3><u>PO Details</u></h3>
-											<div class="form-group">
-												<label for="ppo_number">Nomor PO :</label>
-												<input class="form-control" type="text" id="ppo_number" value="<?php echo $row['no_po']; ?>" readonly>
-												<label>Tanggal PO :</label>
-												<input class="form-control "type="text" id="tanggal_po" value="<?php echo $Tanggal_po ?>" readonly>
-												<label>Nama Vendor :</label>
-												<input class="form-control "type="text" id="nama_vendor" readonly>
-											</div>
-										</div>
-										<div class="col-md-6">
-											<h3><u>BOD's Note</u></h3>
-									<!-- <label>Richardus Teddy :</label><input class="form-control" type="text" id="comment_rt[]" value="<?php if(!empty($po_comment_rt)){echo $po_comment_rt;} ?>" <?php if($user == BOD_HP || $user == BOD_DL){echo "readonly";} ?>> -->
-									<!-- <label>Harijanto Pribadi :</label><input class="form-control" type="text" id="comment_hp[]" value="<?php if(!empty($po_comment_hp)){echo $po_comment_hp;} ?>" <?php if($user == BOD_RT || $user == BOD_DL){echo "readonly";} ?>> -->
-									<!-- <label>Dicky Lisal :</label><input class="form-control" type="text" id="comment_dl[]" value="<?php if(!empty($po_comment_dl)){echo $po_comment_dl;} ?>" <?php if($user == BOD_RT || $user == BOD_HP){echo "readonly";} ?>> -->
-											<label for="comment_rt">Richardus Teddy</label>
-											<textarea class="form-control" name="comment_rt[]" id="comment_rt[]" rows="5" <?php if($user == BOD_HP || $user == BOD_DL){echo "readonly";} ?>><?php if(!empty($po_comment_rt)){echo $po_comment_rt;} ?></textarea>
-											<label for="comment_hp">Harijanto Pribadi</label>
-											<textarea class="form-control" name="comment_hp[]" id="comment_hp[]" rows="5" <?php if($user == BOD_RT || $user == BOD_DL){echo "readonly";} ?>><?php if(!empty($po_comment_hp)){echo $po_comment_hp;} ?></textarea>
-											<label for="comment_dl">Dicky Lisal</label>
-											<textarea class="form-control" name="comment_dl[]" id="comment_dl[]" rows="5" <?php if($user == BOD_RT || $user == BOD_HP){echo "readonly";} ?>><?php if(!empty($po_comment_dl)){echo $po_comment_dl;} ?></textarea>
-										</div>
-									</div>
-								</div>
-								<div class="modal-footer">
-									<h5 style="float:left;font-weight:bold;">Submitted by <?php echo $by ?> </h5>
-									<button type="button" class="btn btn-default" data-dismiss="modal">Save</button>
-								</div>
-							</div>
-
-						</div>
-					</div>
 				</div>
 			</div>
 		</div>
 	</div>
-	
 	<?php 
 	// echo $user;
 		} 
@@ -763,4 +785,37 @@ $('tr #check-box').on('click',function(){
     $("#nama_vendor").val($(this).closest('tr').children()[2].textContent);
 });
 
+		function formatDate(date) {
+			var year = date.getFullYear(),
+				month = date.getMonth() + 1, // months are zero indexed
+				month = month < 10 ? "0" + month : month,
+				day = date.getDate(),
+				hour = date.getHours(),
+				minute = date.getMinutes(),
+				second = date.getSeconds(),
+				hourFormatted = hour % 12 || 12, // hour returned in 24 hour format
+				minuteFormatted = minute < 10 ? "0" + minute : minute,
+				morning = hour < 12 ? " am" : " pm";
+
+			return year + "-" + month + "-" + day + " " + hourFormatted + ":" +
+					minuteFormatted + ":" + second;
+		}
+		function check(cb, test)
+		{
+			if (cb.checked) {
+			
+				document.getElementById( test ).value = formatDate(new Date ());
+			}
+			else
+				document.getElementById( test ).value = "";
+		}
+				function check2(cb2, test2)
+		{
+			if (cb2.checked) {
+				
+				document.getElementById( test2 ).value = '1';	
+			}
+			else
+				document.getElementById( test2 ).value = "0";
+		}
 </script>

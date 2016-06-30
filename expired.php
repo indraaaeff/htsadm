@@ -36,15 +36,20 @@
 			</div>
 		</div>
 	</div>
-	<div class="container-fluid">
+	<div class="container">
+		<div class="row">
 			<div class="content">
-				
 				<div class="alerts" style="line-height:30px;">
 					<font color="#FF0000">Data link tidak ditemukan atau sudah expired.!</font>
 				</div>			
 			</div>
-		
+		</div>
 	</div>
+	<footer class="footer">
+      <div class="container">
+        <p class="text-muted">Copyright &copy; 2016 PT. Hawk Teknologi Solusi, All Rights Reserved.</p>
+      </div>
+    </footer>
 </body>
 <script type="text/javascript">
 function startTime()
