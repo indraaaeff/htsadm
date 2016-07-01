@@ -176,6 +176,7 @@
 
 							</thead>
 							<?php 
+							$row['comment_rt'] = "okeee";
 							$po_approve_by_rt   = $row['approve_by_rt'];
 							$po_tgl_approved_rt = $row['tgl_approved_rt'];	  
 							$po_comment_rt      = $row['comment_rt'];		
@@ -188,14 +189,12 @@
 							$po_tgl_approved_dl = $row['tgl_approved_dl'];	  
 							$po_comment_dl      = $row['comment_dl'];
 
+							// echo $po_comment_rt;
 							// $po_tgl_approved_rt="2/6/2016";
 							// $po_approve_by_rt=1;
 							// $po_tgl_approved_hp=1;
 							// $po_approve_by_hp=0;
 							// $po_tgl_approved_dl=1;
-							// $po_comment_rt = "OKAY !";
-							// $po_comment_hp = "saya sangat tidak setuju, karena alat yang lama masih mendukung kinerja tersebut";
-						    // $po_comment_dl = "saya setuju karena, kita harus menggunakan teknologi terbaru guna mendukung kecepatan koneksi";
 							?>
 							<tbody>
 								<!-- loop for row details -->
@@ -252,6 +251,9 @@
             								// $po_tgl_approved_hp = 1;
             								// $po_approve_by_hp =1 ;
             								// $po_approve_by_dl =1 ;
+            							// $row['comment_rt'] = "okeee";
+            							// $po_comment_rt = 1;
+            							// $row['nama_vendor'] = "HTS";
 
             								if ($po_tgl_approved_rt==''){
             									if(!empty($po_approve_by_hp) && !empty($po_approve_by_dl)) {
@@ -271,7 +273,7 @@
 	            							<input type="" name="nama_vendor[]" value="<?php echo $row['nama_vendor'];?>">
 	            							<input type="" name="no_ppo" value="<?php echo $PPO_Number;?>">
 	            							<input type="" name="sub_by" value="<?php echo $by;?>">
-	            							<input type="" name="comment_rt" value="<?php echo $comment_rt; ?>">
+	            							<input type="" name="comment_rt[]" value="<?php echo $po_comment_rt ?>">
             						</td>
 	            						<?php 
 	            							} else {
@@ -390,7 +392,7 @@
 	            							<input type="" name="nama_vendor[]" value="<?php echo $row['nama_vendor'];?>">
 	            							<input type="" name="no_ppo" value="<?php echo $PPO_Number;?>">
 	            							<input type="" name="sub_by" value="<?php echo $by;?>">
-	            							<input type="" name="comment_rt" value="<?php echo $comment_hp; ?>">
+	            							<input type="" name="comment_hp[]" value="<?php echo $po_comment_hp; ?>">
 	            					
 	            					</td>
 	            					 <td id="check-box">
@@ -495,7 +497,7 @@
 	            							<input type="" name="nama_vendor[]" value="<?php echo $row['nama_vendor'];?>">
 	            							<input type="" name="no_ppo" value="<?php echo $PPO_Number;?>">
 	            							<input type="" name="sub_by" value="<?php echo $by;?>">
-	            							<input type="" name="comment_rt" value="<?php echo $comment_hp; ?>">
+	            							<input type="" name="comment_dl[]" value="<?php echo $po_comment_dl; ?>">
             						</td>
 	            					<td>
 										<!-- <p>Waiting</p> -->
@@ -543,12 +545,38 @@
             										</div>
             										<div class="col-md-6">
             											<h3><u>BOD's Note</u></h3>
-            								<!-- 			<label for="comment_rt">Richardus Teddy</label>
+            											<?php 
+
+            												
+            											?>
+
+            											<label for="comment_rt">Richardus Teddy</label>
             											<textarea class="form-control" name="comment_rt[]" rows="5" <?php if($user == BOD_HP || $user == BOD_DL){echo "readonly";} ?>><?php if(!empty($po_comment_rt)){echo $po_comment_rt;} ?></textarea>
             											<label for="comment_hp">Harijanto Pribadi</label>
             											<textarea class="form-control" name="comment_hp[]" rows="5" <?php if($user == BOD_RT || $user == BOD_DL){echo "readonly";} ?>><?php if(!empty($po_comment_hp)){echo $po_comment_hp;} ?></textarea>
             											<label for="comment_dl">Dicky Lisal</label>
-            											<textarea class="form-control" name="comment_dl[]" rows="5" <?php if($user == BOD_RT || $user == BOD_HP){echo "readonly";} ?>><?php if(!empty($po_comment_dl)){echo $po_comment_dl;} ?></textarea> -->
+            											<textarea class="form-control" name="comment_dl[]" rows="5" <?php if($user == BOD_RT || $user == BOD_HP){echo "readonly";} ?>><?php if(!empty($po_comment_dl)){echo $po_comment_dl;} ?></textarea>
+            										<!-- 	<?php 
+	            											if ( isset( $_POST[ '$po_comment_rt' ] )) {
+	            												$po_comment_rt = $_POST[ '$po_comment_rt' ];
+	            												foreach ($po_comment_rt as $user) {
+	            													if ( !empty( $user ) )
+	            														echo ( $user . "<br />" );
+	            												}
+	            											}
+	            											else {
+	            												for ($x=0; $x< $num_rows; $x++) { $po_comment_rt[ $x ] = ""; }
+	            											}
+            											?>
+            											<?php 
+            												for ($x=0 ; $x < $num_rows ; $x++ ) { 
+            													// # code...
+            													echo '<textarea name="$comment_rt[]">' . $po_comment_rt[$x] . '</textarea>';
+            													echo '<textarea name="$comment_hp[]">' . $po_comment_hp[$x] . '</textarea>';
+            													echo '<textarea name="$comment_dl[]">' . $po_comment_dl[$x] . '</textarea><br />';
+            											// <textarea name="$comment_rt" rows="5"> .$po_comment_rt[$x]. </textarea>
+            												}
+            											?> -->
             										</div>
             									</div>
             								</div>
