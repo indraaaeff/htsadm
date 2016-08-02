@@ -9,7 +9,6 @@
 	<link href='http://fonts.googleapis.com/css?family=Oswald:400,300,700' rel='stylesheet' type='text/css'>
 	<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.0/jquery.min.js"></script>
   	<script src="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js"></script>
-
 </head>
 <body>
 	<?php
@@ -501,7 +500,7 @@
             						</td>
 	            					<td>
 										<!-- <p>Waiting</p> -->
-										<?php 
+	            						<?php 
 	            							if(!empty($po_tgl_approved_rt)){
 	            								if($po_approve_by_rt==1){
 	            									echo '<p style="color:green;font-weight:bold;">Approved</p>';
